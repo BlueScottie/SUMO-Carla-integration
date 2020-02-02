@@ -31,18 +31,9 @@ import xml.etree.ElementTree as ET
 #FILE_NAME = 'Town01_Car50.log'
 FILE_NAME = 'Town01_Car50_2.log'
 OUTPUT_PATH = 'Car50_2/data/'
-BSM_ORIGINALPATH = '/home/usrp/carla/PythonAPI/shunsuke_workplace/Car50_2/'
+BSM_ORIGINALPATH = '/carla/PythonAPI/workplace/Car50_2/'
 
 
-#BSM_Vehicle = 1
-#SensingVehicleID = 1
-#BSM_Vehicle = list(range(49))
-#BSM_path = '/home/usrp/carla/PythonAPI/shunsuke_workplace/_shunsuke/VehicleData_BSM/BSM_'+str(BSM_Vehicle)+'.txt'
-#BSM_path = []
-#for k in range(0,len(BSM_Vehicle)):
-#    new_path = '/home/usrp/carla/PythonAPI/shunsuke_workplace/_shunsuke/VehicleData_BSM/BSM_'+str(BSM_Vehicle[k])+'.txt'
-#    BSM_path.append(new_path)
-#BSM_mode = True #when True, take all BSM
 
 def BSMWriter(file_path, carID_list, timestamp, actor_list, ID_table, BSM_vehicleID):
 #   BSM contains (time, location.x, location.y, heading)
@@ -137,10 +128,6 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
         blueprint_library = world.get_blueprint_library()
 #        blueprint = random.choice(blueprint_library.filter('vehicle.toyota.*'))
         blueprint = random.choice(blueprint_library.filter('vehicle.toyota.prius')) # having 10 different colors
-#        blueprint = random.choice(blueprint_library.filter('vehicle.seat.leon'))
-#        blueprint = random.choice(blueprint_library.filter('vehicle.*'))
-#        print(blueprint)
-#        blueprint = random.choice(blueprint_library.filter('vehicle.mini.cooperst'))
         #vehicle.chevrolet.impala
         #vehicle.diamondback.century
         #vehicle.audi.tt,tags
@@ -160,9 +147,7 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
 
         if blueprint.has_attribute('color'):
             color = random.choice(blueprint.get_attribute('color').recommended_values)
-#            color = random.choice(blueprint.get_attribute('color'))
             blueprint.set_attribute('color', color)
-#        blueprint = random.choice(blueprint_library.filter('vehicle.toyota.prius'))
         blueprint.set_attribute('role_name', 'autopilot')
 
 
@@ -194,8 +179,6 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
             x_diff = 0.33
             x_diff_rear = 0.7
             y_diff = x_diff**(1/2.0)
-#            try:
-#                os.makedirs('_shunsuke/data')
 #            except:
 #                print('data folder cannot be generated')
 
@@ -358,7 +341,6 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
 #CityScapesPalette
 #            colored_sem_seg = image_converter.labels_to_cityscapes_palette(semanticcamera)
             #converted_semantic = ColorConverter.CityScapesPalette(semanticcamera)
-#            converted_semantic.listen(lambda image: image.save_to_disk('_shunsuke/semantic/test_%s' % image.frame_number))
 
 #############################
 #############################
@@ -375,10 +357,6 @@ def ChangeLocation4ExistingCars(SumoVehicleInfo_ForAll, Previous_Elapsedtime, El
     # print('len(actor_list):', len(actor_list), actor_list[0].type_id, actor_list[0].parent)#, actor_list[0].semantic_tags)
     # print('len(ID_table):', len(ID_table))
     # print(type(actor_list[0].type_id))
-    # for i in range(0, len(actor_list)):
-    #     print('shunsuke:', actor_list[i].type_id, actor_list[i].parent, actor_list[i].id)
-    #     if(actor_list[i].parent != None):
-    #         print('nyan', actor_list[i].parent.id)
 
     for actor in actor_list:
         if actor.parent != None: # meaning "attached sensors to vehicles"
@@ -412,7 +390,6 @@ def ChangeLocation4ExistingCars(SumoVehicleInfo_ForAll, Previous_Elapsedtime, El
 #                Floor_z = SumoVehicleInfo_ForAll[i]['z']
 #                Floor_pitch = SumoVehicleInfo_ForAll[i]['pitch']
                 Floor_yaw = float(SumoVehicleInfo_ForAll[i]['angle'])# - 90
-#                print('test2:shunsuke')
                 iterate_number = i + VehicleNumber*2
                 if(len(SumoVehicleInfo_ForAll)<=iterate_number):
                     iterate_number=len(SumoVehicleInfo_ForAll);
@@ -447,11 +424,9 @@ def ChangeLocation4ExistingCars(SumoVehicleInfo_ForAll, Previous_Elapsedtime, El
 
             if targetID in killed_list:
                 counter = counter + 1
-#                print('test5:shunsuke', len(killed_list))
                 break
 
 
-#        print('test3:shunsuke', counter)
         if (not Updated_x == -1 ) and (not Updated_y == -1):
             location=actor.get_location()
             location.x = Updated_x
@@ -460,7 +435,6 @@ def ChangeLocation4ExistingCars(SumoVehicleInfo_ForAll, Previous_Elapsedtime, El
             transform.location = location
             transform.rotation.yaw = Updated_yaw
             actor.set_transform(transform)
-#            print('test4:shunsuke')
 
     return counter
 
@@ -648,7 +622,6 @@ def main():
 
     #SumoVehicleInfo_ForAll = parseXML_forAllVehicles('sumo_log/Town01_Car50.log',VehicleNumber) 
     SumoVehicleInfo_ForAll = parseXML_forAllVehicles('sumo_log/'+FILE_NAME,VehicleNumber) 
-    #BSM_path = '/home/usrp/carla/PythonAPI/shunsuke_workplace/_shunsuke/VehicleData_BSM/BSM_'+str(args.vehicleID)+'.txt'
     try:
         os.makedirs(BSM_ORIGINALPATH+'VehicleData_BSM/')
     except:
@@ -748,7 +721,6 @@ def main():
 
             if previous_mill_sec > elapsedtime_mill_sec:
                 #print('killing and generating')
-#                print('shunsuke:', actor_list[0].get_location().x, actor_list[0].get_location().y)
 #                if not(len(actor_list) == Active_Car_Num):
 #                    print('KILL! in Function')
                 (actor_list, killed_list,active_carID_list) = Kill_Finished_Vehicles(SumoVehicleInfo_ForAll, elapsedtime, actor_list, killed_list, active_carID_list,ID_table)
@@ -779,7 +751,6 @@ def main():
 #                print('len(ID_table):', len(ID_table))
 #                print(type(actor_list[0].type_id))
 #                for i in range(0, len(actor_list)):
-#                    print('shunsuke:', actor_list[i].type_id, actor_list[i].parent, actor_list[i].id)
 #                    if(actor_list[i].parent != None):
 #                        print('nyan', actor_list[i].parent.id)
 

@@ -1,4 +1,4 @@
-# SUMO_Carla_integration
+# SUMO-Carla-integration
 
 The project is to integrate SUMO and Carla, because Carla's traffic is insufficiently sophisticated yet.
 We use the traffic information from SUMO and parse them into Carla.
