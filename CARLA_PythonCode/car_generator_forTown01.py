@@ -143,13 +143,10 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
         #vehicle.yamaha.yzf
         #vehicle.audi.etron
 
-
-
         if blueprint.has_attribute('color'):
             color = random.choice(blueprint.get_attribute('color').recommended_values)
             blueprint.set_attribute('color', color)
         blueprint.set_attribute('role_name', 'autopilot')
-
 
         actor = world.spawn_actor(blueprint, transform)
         actor_list.append(actor)
@@ -163,9 +160,7 @@ def Generate_New_Vehicles(SumoVehicleInfo_ForAll, Elapsedtime, actor_list, bluep
         # othersensor.listen(lambda image: image.save_to_disk('leon_log/others_%s' ) % image.frame_number)
         # actor_list.append(othersensor)
 
-
         if new_id_list[n]==vehicleID4Sensing:
-
 
             #Front Camera
 ##                camera_transform = carla.Transform(carla.Location(x=1.0,z=1.3))
@@ -767,7 +762,6 @@ def main():
 
 #                    for i in range(0, len(active_carID_list)):
 #                        print('when t is 80: ',active_carID_list[i])
-
 
     finally:
         print('\ndestroying %d actors' % len(actor_list))
