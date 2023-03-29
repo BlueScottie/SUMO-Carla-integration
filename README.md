@@ -56,3 +56,5 @@ You basically use ./mapconverter to convert the road networks. (see SUMO_script 
 
 IEEE Intelligent Vehicles Symposium (IV), Cooperative Perception with Deep Reinforcement Learningfor Connected Vehicles (S. Aoki, T. Higuchi, O. Altintas),
 from National Institute of Informatics, Japan, Carnegie Mellon University, US, and Toyota InfoTech, US.
+
+Extended by JST START Project with Shunsuke Aoki, NII
